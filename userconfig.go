@@ -64,10 +64,8 @@ func (c *UserConfig) send(request *http.Request, service *Service, client *http.
 }
 
 // GetRequestToken issues a request to obtain a Request token.
-func (c *UserConfig) GetRequestToken(ctx context.Context, service *Service, client *http.Client) error {
-	data := url.Values{}
-
-	if service.ClientConfig.CallbackURL != "" {
+func (c *UserConfig) GetRequestToken(ctx context.Context, service *Service, client *http.Client, data url.Values) error {
+	if service.ClientConfig.CallbackURL != "" && data.Get("oauth_callback") == "" {
 		data.Set("oauth_callback", service.ClientConfig.CallbackURL)
 	}
 

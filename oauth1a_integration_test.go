@@ -18,6 +18,7 @@ import (
 	"context"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"testing"
 )
@@ -81,7 +82,8 @@ func TestGetRequestToken(t *testing.T) {
 	service, _ := GetTwitterConfig(t)
 	userConfig := new(UserConfig)
 	httpClient := new(http.Client)
-	err := userConfig.GetRequestToken(context.Background(), service, httpClient)
+	data := url.Values{}
+	err := userConfig.GetRequestToken(context.Background(), service, httpClient, data)
 	if err != nil {
 		t.Errorf("Response had an error: %v", err)
 	}
